@@ -1,9 +1,9 @@
 ---
-DEV:
-  file_name: Ontwikkel
+Development:
+  file_name: Dev
 
-ACC:
-  file_name: Acceptatie
+Acceptance:
+  file_name: Acc
 
-PROD:
-  file_name: Productie
+Production:
+  file_name: Prod
