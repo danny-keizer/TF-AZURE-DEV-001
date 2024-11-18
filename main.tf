@@ -9,17 +9,12 @@ terraform {
   } 
 }
 
-module "local_create_files" {
-  source = "git::https://github.com/danny-keizer/terraform-modules.git//Modules//Local_Files"
-  file_name = "DEV"
+locals {
+    yml_data = yamldecode(file("${path.module}/data.yml"))
 }
 
-module "local_create_files" {
+module "Development" {
   source = "git::https://github.com/danny-keizer/terraform-modules.git//Modules//Local_Files"
-  file_name = "ACC"
-}
-
-module "local_create_files" {
-  source = "git::https://github.com/danny-keizer/terraform-modules.git//Modules//Local_Files"
-  file_name = "PROD"
+  for_each = local.yml_data
+  file_name = each.value.file_name
 }
