@@ -23,6 +23,7 @@ jobs:
 
   terraform:
     name: 'Terraform'
+    needs: azure
     runs-on: ubuntu-latest
     defaults:
       run:
