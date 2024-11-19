@@ -5,12 +5,12 @@ terraform {
       version = "4.10.0"
     }
   }
-  backend "azurerm" { 
-    resource_group_name  = "TF-Deploy"
-    storage_account_name = "tfdeployaccount" 
-    container_name = "tfstateblob" 
-    key = "terraform.tfstate" 
-    use_msi = true
+terraform { 
+  cloud {  
+    organization = "private-acme" 
+    workspaces { 
+      name = "ci-demo" 
+    } 
   } 
 }
 
