@@ -1,14 +1,20 @@
-provider "azurerm" {
-  features {}
-  use_msi = true
-}
-
 terraform { 
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "4.10.0"
+    }
+  }
   backend "azurerm" { 
     storage_account_name = "tfdeployaccount" 
     container_name = "tfstateblob" 
     key = "terraform.tfstate" 
   } 
+}
+
+provider "azurerm" {
+  features {}
+  use_msi = true
 }
 
 locals {
