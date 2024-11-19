@@ -16,27 +16,27 @@ jobs:
       run:
         shell: bash
     steps:
-    
+
       - name: Checkout Repository
         uses: actions/checkout@v4
-  
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
-  
+
       - name: Azure login using Managed Identity
-        uses: azure/login@v2
+        uses: azure/login@v1
         with:
-          managed-identity-client-id: ${{ secrets.AZURE_MANAGED_IDENTITY_CLIENT_ID }}
-          enable-managed-identity-auth: true
+          client-id: ${{ secrets.AZURE_MANAGED_IDENTITY_CLIENT_ID }}
+          allow-no-subscriptions: true
+          environment: 'AzureCloud'
+          resource: 'https://management.azure.com/'
 
       - name: Terraform Init
         run: terraform init
-  
+
       - name: Terraform Plan
         run: terraform plan -input=false
-  
+
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
-
-
