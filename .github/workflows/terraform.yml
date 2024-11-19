@@ -9,9 +9,12 @@ permissions:
   contents: read
 
 jobs:
-  azure:
-    name: 'Azure'
+  deploy:
+    name: 'Deploy'
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
     steps:
     
       - name: Azure login
@@ -21,29 +24,20 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-  terraform:
-    name: 'Terraform'
-    needs: azure
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash
-    steps:
-
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
-      with:
-        cli_config_credentials_token: ${{ secrets.TF_API_KEY }}
-
-    - name: Terraform Init
-      run: terraform init
-
-    - name: Terraform Plan
-      run: terraform plan -input=false
-
-    - name: Terraform Apply
-      if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
-      run: terraform apply -auto-approve -input=false
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+  
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_KEY }}
+  
+      - name: Terraform Init
+        run: terraform init
+  
+      - name: Terraform Plan
+        run: terraform plan -input=false
+  
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
