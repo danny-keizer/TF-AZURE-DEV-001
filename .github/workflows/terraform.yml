@@ -20,6 +20,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Setup Terraform CLI
+        uses: hashicorp/setup-terraform@v2.0.2
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
       - name: Terraform Init
         run: |
           export ARM_USE_MSI=true
