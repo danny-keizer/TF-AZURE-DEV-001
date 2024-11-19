@@ -20,11 +20,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v1
-
       - name: Set Environment
         run: export ARM_USE_MSI=true ARM_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }} ARM_TENANT_ID=${{ secrets.AZURE_TENANT_ID }} ARM_CLIENT_ID=${{ secrets.AZURE_MANAGED_IDENTITY_CLIENT_ID }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
         run: terraform init
