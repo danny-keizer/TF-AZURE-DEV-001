@@ -32,6 +32,9 @@ jobs:
           allow-no-subscriptions: true
           environment: 'AzureCloud'
 
+      - name: Set Options
+        run: export ARM_USE_MSI=true
+
       - name: Terraform Init
         run: terraform init
 
