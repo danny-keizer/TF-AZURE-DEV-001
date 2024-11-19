@@ -23,17 +23,12 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
 
-      - name: Azure login using Managed Identity
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZURE_MANAGED_IDENTITY_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          allow-no-subscriptions: true
-          environment: 'AzureCloud'
-
-      - name: Set Options
-        run: export ARM_USE_MSI=true
+      - name: Set Environment
+        run: |
+          export ARM_USE_MSI=true\
+          export ARM_SUBSCRIPTION_ID=${{ '${{secrets.AZURE_SUBSCRIPTION_ID}}' }} \
+          export ARM_TENANT_ID=${{ '${{secrets.AZURE_TENANT_ID}}' }} \
+          export ARM_CLIENT_ID=${{ '${{secrets.AZURE_MANAGED_IDENTITY_CLIENT_ID}}' }} \
 
       - name: Terraform Init
         run: terraform init
