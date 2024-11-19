@@ -23,10 +23,11 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
   
-      - name: Azure login using OIDC and Managed Identity
+      - name: Azure login using Managed Identity
         uses: azure/login@v2
         with:
           managed-identity-client-id: ${{ secrets.AZURE_MANAGED_IDENTITY_CLIENT_ID }}
+          enable-managed-identity-auth: true
 
       - name: Terraform Init
         run: terraform init
@@ -37,4 +38,5 @@ jobs:
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
+
 
