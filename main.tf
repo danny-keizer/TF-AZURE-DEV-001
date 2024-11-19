@@ -4,6 +4,7 @@ terraform {
       source = "hashicorp/azurerm"
       version = "4.10.0"
     }
+        }
   cloud {  
     organization = "private-acme" 
     workspaces { 
