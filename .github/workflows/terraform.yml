@@ -31,7 +31,6 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           allow-no-subscriptions: true
           environment: 'AzureCloud'
-          resource: 'https://management.azure.com/'
 
       - name: Terraform Init
         run: terraform init
